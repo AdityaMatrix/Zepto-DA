@@ -16,9 +16,13 @@ Author: Aditya
 """
 
 import os
+import sys
 import json
 import pandas as pd
 import textwrap
+
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "outputs")
 DATA_PATH  = os.path.join(os.path.dirname(__file__), "..", "data", "zepto_v2.csv")

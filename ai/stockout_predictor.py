@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Zepto Inventory — Out-of-Stock Risk Predictor
 ==============================================
@@ -15,6 +16,8 @@ Author: Aditya
 
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Non-interactive backend — works on all platforms
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
@@ -28,6 +31,11 @@ from sklearn.metrics import (
     roc_curve,
 )
 import os
+import sys
+
+# Fix Windows terminal encoding for Unicode output
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # ─────────────────────────────────────────────
 # 1. Load & Prepare Data
@@ -49,7 +57,7 @@ df["discountedSellingPrice"] = df["discountedSellingPrice"] / 100.0
 # Derived features
 df["savings_rs"] = df["mrp"] - df["discountedSellingPrice"]
 df["price_per_gram"] = df["discountedSellingPrice"] / df["weightInGms"].replace(0, np.nan)
-df["price_per_gram"].fillna(df["price_per_gram"].median(), inplace=True)
+df["price_per_gram"] = df["price_per_gram"].fillna(df["price_per_gram"].median())
 
 # Encode category
 le = LabelEncoder()
@@ -147,7 +155,7 @@ plt.tight_layout()
 out_path = os.path.join(OUTPUT_DIR, "stockout_predictor.png")
 plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor="#111")
 print(f"\n✅ Plot saved → {out_path}")
-plt.show()
+plt.close()
 
 # ─────────────────────────────────────────────
 # 5. Score All Products & Save Risk Table

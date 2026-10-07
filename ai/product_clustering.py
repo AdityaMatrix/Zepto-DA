@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Zepto Inventory — Product Segmentation via KMeans Clustering
 =============================================================
@@ -14,6 +15,8 @@ Author: Aditya
 
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sns
@@ -22,6 +25,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 import os
+import sys
+
+# Fix Windows terminal encoding
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # ─────────────────────────────────────────────
 # 1. Load & Prepare Data
@@ -42,7 +50,7 @@ df["savings_rs"] = df["mrp"] - df["discountedSellingPrice"]
 df["price_per_gram"] = (
     df["discountedSellingPrice"] / df["weightInGms"].replace(0, np.nan)
 )
-df["price_per_gram"].fillna(df["price_per_gram"].median(), inplace=True)
+df["price_per_gram"] = df["price_per_gram"].fillna(df["price_per_gram"].median())
 
 CLUSTER_FEATURES = [
     "mrp",
@@ -83,15 +91,15 @@ print("\nCluster Centroids (standardised feature means):")
 print(cluster_summary.round(2))
 
 SEGMENT_NAMES = {
-    cluster_summary["mrp"].idxmax(): "💎 Premium Products",
-    cluster_summary["discountPercent"].idxmax(): "🏷️ Deep Discount Items",
-    cluster_summary["availableQuantity"].idxmax(): "📦 High-Stock Staples",
-    cluster_summary["price_per_gram"].idxmin(): "💰 Best Value (Price/Gram)",
+    cluster_summary["mrp"].idxmax(): "[Premium] High-MRP Products",
+    cluster_summary["discountPercent"].idxmax(): "[Discount] Deep Discount Items",
+    cluster_summary["availableQuantity"].idxmax(): "[Staples] High-Stock Staples",
+    cluster_summary["price_per_gram"].idxmin(): "[Value] Best Price-per-Gram",
 }
 # Fill any unmapped cluster
 for c in range(BEST_K):
     if c not in SEGMENT_NAMES:
-        SEGMENT_NAMES[c] = f"🔵 Cluster {c}"
+        SEGMENT_NAMES[c] = f"Cluster {c}"
 
 df["segment"] = df["cluster"].map(SEGMENT_NAMES)
 print("\nSegment distribution:")
@@ -153,7 +161,7 @@ plt.tight_layout()
 out_path = os.path.join(OUTPUT_DIR, "product_clustering.png")
 plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor="#111")
 print(f"\n✅ Plot saved → {out_path}")
-plt.show()
+plt.close()
 
 # ─────────────────────────────────────────────
 # 6. Segment Report

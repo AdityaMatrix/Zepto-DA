@@ -15,6 +15,8 @@ Author: Aditya
 
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from sklearn.linear_model import LinearRegression
@@ -22,6 +24,10 @@ from sklearn.preprocessing import PolynomialFeatures, LabelEncoder
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import r2_score
 import os
+import sys
+
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # ─────────────────────────────────────────────
 # 1. Load & Prepare Data
@@ -142,7 +148,7 @@ plt.tight_layout()
 out_path = os.path.join(OUTPUT_DIR, "price_elasticity.png")
 plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor="#111")
 print(f"\n✅ Plot saved → {out_path}")
-plt.show()
+plt.close()
 
 # Save results
 elasticity_df.to_csv(os.path.join(OUTPUT_DIR, "price_elasticity_results.csv"), index=False)
