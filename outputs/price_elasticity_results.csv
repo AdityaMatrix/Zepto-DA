@@ -1,0 +1,15 @@
+category,n_skus,avg_discount,avg_revenue_proxy,elasticity_coeff,r2_score
+Biscuits,147,8.24,170.12,0.0332,0.145
+"Meats, Fish & Eggs",63,11.03,328.46,0.0192,0.101
+"Dairy, Bread & Batter",129,7.16,426.75,0.0162,0.037
+Beverages,129,7.16,426.75,0.0162,0.037
+Health & Hygiene,97,8.05,661.65,0.0157,0.088
+Home & Cleaning,193,5.7,635.55,0.0145,0.033
+Cooking Essentials,514,7.16,656.36,0.012,0.029
+Munchies,514,7.16,656.36,0.012,0.029
+Ice Cream & Desserts,388,8.32,578.31,0.0097,0.027
+Chocolates & Candies,388,8.32,578.31,0.0097,0.027
+Packaged Food,388,8.32,578.31,0.0097,0.027
+Paan Corner,344,6.25,787.35,0.0036,0.013
+Personal Care,344,6.25,787.35,0.0036,0.013
+Fruits & Vegetables,93,15.46,116.62,-0.0125,0.225
