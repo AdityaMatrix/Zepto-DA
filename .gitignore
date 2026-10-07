@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment Variables
+.env
+.env.local
+*.env
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Data (large files — use Git LFS or keep locally)
+# data/*.csv  # Uncomment if CSV is too large for GitHub
+
+# Outputs / Generated
+outputs/*.png
+outputs/*.jpg
+outputs/*.xlsx
+
+# Logs
+*.log
+logs/
